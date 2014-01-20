@@ -32,8 +32,7 @@ public final class Board {
     Boolean rangeLoop;
     Integer HoleX, HoleY;
     Integer Fitness;
-    ArrayList<Object> Astar = new ArrayList<>();
-    
+    ArrayList<NodeFitness> Astar = new ArrayList<>();
 
     public Integer getFitness() {
         return Fitness;
@@ -392,61 +391,89 @@ public final class Board {
             if (type.equals("E")) {
                 checkPossibleMove(node);
                 //check wether the node has possible move or not
-                if(!possibleNodeMove.isEmpty()){
-                    for(Node possibleNode : possibleNodeMove){
+                if (!possibleNodeMove.isEmpty()) {
+                    for (Node possibleNode : possibleNodeMove) {
                         //check if the human can eat this node or not 
-                        for(Node humanNode : Nodes){
-                            if(humanNode.type.equals("H")){
+                        for (Node humanNode : Nodes) {
+                            //check for human node
+                            if (humanNode.type.equals("H")) {
                                 setInitX(humanNode.x);
                                 setInitY(humanNode.y);
-                                for(Hole inHole : innerHole){
+                                //init array to hold possible hole
+                                ArrayList<Hole> possibleInnerHole = new ArrayList<>();
+                                ArrayList<Hole> possibleOuterHole = new ArrayList<>();
+
+                                //check possible hole in inner hole loop
+                                for (Hole inHole : innerHole) {
                                     checkLoopRange(inHole.a, inHole.b);
-                                    //check wether the hole is in the node range or not
-                                    if(getRangeLoop() == true){
-                                        checkPathLoop(inHole.a, inHole.b);
-                                        boolean innerSuccess = getAiSuccess();
-                                        if(innerSuccess == true){
-                                            //check wether the final x and y is the possible node
-                                            if(possibleNode.x == getFinalX() && possibleNode.y == getFinalY()){
-                                                Integer tempFitness = getFitness();
-                                                setFitness(tempFitness - 1);
-                                                //then check if it can counter or not
-                                            }else{
-                                                //if the final X and Y is not the same then the human node cannot eat this node
-                                                Integer tempFitness = getFitness();
-                                                Astar.add(possibleNode,tempFitness);
-                                            }
-                                            
-                                        } else{
-                                            //if the 
-                                        }
+                                    boolean rangeInnerLoop = getRangeLoop();
+                                    if (rangeInnerLoop == true) {
+                                        possibleInnerHole.add(inHole);
                                     }
                                 }
-                                for(Hole outHole : outerHole){
+
+                                //check possible hole in outer hole loop
+                                for (Hole outHole : outerHole) {
                                     checkLoopRange(outHole.a, outHole.b);
-                                    //check wether the hole is in hole range or not
-                                    if(getRangeLoop() == true){
-                                        checkPathLoop(outHole.a, outHole.b);
-                                        boolean outerSuccess = getAiSuccess();
-                                        if(outerSuccess == true){
+                                    boolean rangeOuterLoop = getRangeLoop();
+                                    if (rangeOuterLoop == true) {
+                                        possibleOuterHole.add(outHole);
+                                    }
+                                }
+
+                                int innerSize = possibleInnerHole.size();
+                                int outerSize = possibleOuterHole.size();
+
+                                // the range is between the inner size loop
+                                if (innerSize != 0 && outerSize == 0) {
+                                    for (Hole hole : possibleInnerHole) {
+                                        checkPathLoop(hole.a, hole.b);
+                                        boolean innerSuccess = getAiSuccess();
+                                        if (innerSuccess == true) {
                                             //check wether the final x and y is the possible node
-                                           if(possibleNode.x == getFinalX() && possibleNode.y == getFinalY()){
+                                            if (possibleNode.x == getFinalX() && possibleNode.y == getFinalY()) {
                                                 Integer tempFitness = getFitness();
                                                 setFitness(tempFitness - 1);
                                                 //then check if it can counter or not
                                             }
                                         }
                                     }
+                                    //if it finished looping and find none way to eat then the fitness will + 1
+                                    //then add to Astar arraylist
+                                    Integer tempFitness = getFitness();
+                                    setFitness(tempFitness + 1);
+                                } //check wether it in the outer loop cycle
+                                else if (outerSize != 0 && innerSize == 0) {
+                                    for (Hole hole : possibleOuterHole) {
+                                        checkPathLoop(hole.a, hole.b);
+                                        boolean outerSuccess = getAiSuccess();
+                                        if (outerSuccess == true) {
+                                            //check wether the final x and y is the possible node
+                                            if (possibleNode.x == getFinalX() && possibleNode.y == getFinalY()) {
+                                                Integer tempFitness = getFitness();
+                                                setFitness(tempFitness - 1);
+                                                //then check if it can counter or not
+                                            }
+                                        }
+                                    }
+                                    //if it finished looping and find none way to eat then the fitness will + 1
+                                    //then add to Astar arraylist
+                                    Integer tempFitness = getFitness();
+                                    setFitness(tempFitness + 1);
+                                } else {
+                                    Integer tempFitness = getFitness();
+                                    setFitness(tempFitness + 1);
                                 }
                             }
+                            NodeFitness temp = new NodeFitness(possibleNode,getFitness());
+                            Astar.add(temp);
                         }
                     }
                 }
             }
         }
     }
-    //move up bearti dia ke atas layar which is x will - 1
-    //move right bearti dia ke kanan which is y will + 1
+
 
     public void checkPossibleMove(Node node) {
         Node moveUp = new Node(node.x - 1, node.y, node.type);
@@ -454,30 +481,30 @@ public final class Board {
         Node moveRight = new Node(node.x, node.y + 1, node.type);
         Node moveLeft = new Node(node.x, node.y - 1, node.type);
 
-        if(moveUp.x < 0 ||moveUp.y < 0 || moveUp.x > 5 || moveUp.y > 5){
-            if(board[moveUp.x][moveUp.y] == null){
+        if (moveUp.x < 0 || moveUp.y < 0 || moveUp.x > 5 || moveUp.y > 5) {
+            if (board[moveUp.x][moveUp.y] == null) {
                 possibleNodeMove.add(moveUp);
             }
         }
-        
-        if(moveDown.x < 0 ||moveDown.y < 0 || moveDown.x > 5 || moveDown.y > 5){
-            if(board[moveDown.x][moveDown.y] == null){
+
+        if (moveDown.x < 0 || moveDown.y < 0 || moveDown.x > 5 || moveDown.y > 5) {
+            if (board[moveDown.x][moveDown.y] == null) {
                 possibleNodeMove.add(moveUp);
             }
         }
-        
-        if(moveRight.x < 0 ||moveRight.y < 0 || moveRight.x > 5 || moveRight.y > 5){
-            if(board[moveRight.x][moveRight.y] == null){
+
+        if (moveRight.x < 0 || moveRight.y < 0 || moveRight.x > 5 || moveRight.y > 5) {
+            if (board[moveRight.x][moveRight.y] == null) {
                 possibleNodeMove.add(moveRight);
             }
         }
-        
-        if(moveLeft.x < 0 ||moveLeft.y < 0 || moveLeft.x > 5 || moveLeft.y > 5){
-            if(board[moveLeft.x][moveLeft.y] == null){
+
+        if (moveLeft.x < 0 || moveLeft.y < 0 || moveLeft.x > 5 || moveLeft.y > 5) {
+            if (board[moveLeft.x][moveLeft.y] == null) {
                 possibleNodeMove.add(moveLeft);
             }
         }
-        
+
     }
 
     public void RandomMove() {
