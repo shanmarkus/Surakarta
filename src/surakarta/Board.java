@@ -384,7 +384,6 @@ public final class Board {
     }
 
     public void smartAIMove() {
-        Fitness = 0;
         //check dia kalo jalan bisa dimakan lagi ga 
         for (Node node : Nodes) {
             String type = node.type;
@@ -395,6 +394,7 @@ public final class Board {
                     for (Node possibleNode : possibleNodeMove) {
                         //check if the human can eat this node or not 
                         for (Node humanNode : Nodes) {
+                            Fitness = 0;
                             //check for human node
                             if (humanNode.type.equals("H")) {
                                 setInitX(humanNode.x);
@@ -465,7 +465,7 @@ public final class Board {
                                     setFitness(tempFitness + 1);
                                 }
                             }
-                            NodeFitness temp = new NodeFitness(possibleNode,getFitness());
+                            NodeFitness temp = new NodeFitness(possibleNode, getFitness());
                             Astar.add(temp);
                         }
                     }
@@ -474,7 +474,6 @@ public final class Board {
         }
     }
 
-
     public void checkPossibleMove(Node node) {
         Node moveUp = new Node(node.x - 1, node.y, node.type);
         Node moveDown = new Node(node.x + 1, node.y, node.type);
@@ -482,24 +481,32 @@ public final class Board {
         Node moveLeft = new Node(node.x, node.y - 1, node.type);
 
         if (moveUp.x < 0 || moveUp.y < 0 || moveUp.x > 5 || moveUp.y > 5) {
+            //do nothing
+        } else {
             if (board[moveUp.x][moveUp.y] == null) {
                 possibleNodeMove.add(moveUp);
             }
         }
 
         if (moveDown.x < 0 || moveDown.y < 0 || moveDown.x > 5 || moveDown.y > 5) {
+            //do nothing
+        } else {
             if (board[moveDown.x][moveDown.y] == null) {
                 possibleNodeMove.add(moveUp);
             }
         }
 
         if (moveRight.x < 0 || moveRight.y < 0 || moveRight.x > 5 || moveRight.y > 5) {
+            //do nothing
+        } else {
             if (board[moveRight.x][moveRight.y] == null) {
                 possibleNodeMove.add(moveRight);
             }
         }
 
         if (moveLeft.x < 0 || moveLeft.y < 0 || moveLeft.x > 5 || moveLeft.y > 5) {
+            //do nothing
+        } else {
             if (board[moveLeft.x][moveLeft.y] == null) {
                 possibleNodeMove.add(moveLeft);
             }
@@ -1473,10 +1480,15 @@ public final class Board {
             System.out.println();
         }
         System.out.println();
-        for (Node node : Nodes) {
-            System.out.print(node.x);
-            System.out.print(node.y);
-            System.out.print(node.type);
+//        for (Node node : Nodes) {
+//            System.out.print(node.x);
+//            System.out.print(node.y);
+//            System.out.print(node.type);
+//            System.out.println();
+//        }
+        for (NodeFitness nodefitness : Astar) {
+            System.out.print(nodefitness.node.x + " " + nodefitness.node.y);
+            System.out.print(nodefitness.fitness);
             System.out.println();
         }
     }
