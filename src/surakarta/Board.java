@@ -30,8 +30,7 @@ public final class Board {
     Integer counterLoop;
     Boolean rangeLoop;
     Integer HoleX, HoleY;
-    
-    
+
     public ArrayList<Node> getNodes() {
         return Nodes;
     }
@@ -270,7 +269,6 @@ public final class Board {
     //Placing new position for new node
     //bug di place node soalnya dia pas random move dia maju dari ada type ke kosong
     //which mean pas dia ke node kosong dia bakal save di nodes nya itu null 
-    
     public void placeNode() {
 
         if (safeMove(finalX, finalY) == true) {
@@ -287,7 +285,7 @@ public final class Board {
     public void manageNodes(int firstX, int firstY, int secondX, int secondY) {
         Node first = new Node(firstX, firstY, board[firstX][firstY]);
         Node second = new Node(secondX, secondY, board[secondX][secondY]);
-        if(second.type == null){
+        if (second.type == null) {
             second.type = first.type;
         }
         for (int i = 0; i < Nodes.size(); i++) {
@@ -351,10 +349,10 @@ public final class Board {
         boolean success = getAiSuccess();
         if (success == true) {
             manageNodes(getInitX(), getInitY(), getFinalX(), getFinalY());
-            for(int i = 0; i < Nodes.size(); i ++){
+            for (int i = 0; i < Nodes.size(); i++) {
                 Node a = Nodes.get(i);
-                if(a.x == getFinalX() && a.y == getFinalY()){
-                    Node b = new Node (getFinalX(), getFinalY(), "E");
+                if (a.x == getFinalX() && a.y == getFinalY()) {
+                    Node b = new Node(getFinalX(), getFinalY(), "E");
                     Nodes.remove(i);
                 }
             }
@@ -680,12 +678,11 @@ public final class Board {
                                 break;
                             }
 
-                        } else {
-                            counterLooptemp = counterLooptemp + 1;
-                            setCounterLoop(counterLooptemp);
-                            checkPathLoop(secondHole.a, secondHole.b);
                         }
                     }
+                    counterLooptemp = counterLooptemp + 1;
+                    setCounterLoop(counterLooptemp);
+                    checkPathLoop(secondHole.a, secondHole.b);
 
                 } else {
                     Hole firstHole = outerHole.get(temp - 1);
@@ -715,12 +712,11 @@ public final class Board {
                                         break;
                                     }
 
-                                } else {
-                                    counterLooptemp = counterLooptemp + 1;
-                                    setCounterLoop(counterLooptemp);
-                                    checkPathLoop(secondHole.a, secondHole.b);
                                 }
                             }
+                            counterLooptemp = counterLooptemp + 1;
+                            setCounterLoop(counterLooptemp);
+                            checkPathLoop(secondHole.a, secondHole.b);
                         } else {
                             for (int i = firstHole.a; i <= secondHole.a; i++) {
                                 if (board[i][firstHole.b] != null) {
@@ -740,12 +736,11 @@ public final class Board {
                                         break;
                                     }
 
-                                } else {
-                                    counterLooptemp = counterLooptemp + 1;
-                                    setCounterLoop(counterLooptemp);
-                                    checkPathLoop(secondHole.a, secondHole.b);
                                 }
                             }
+                            counterLooptemp = counterLooptemp + 1;
+                            setCounterLoop(counterLooptemp);
+                            checkPathLoop(secondHole.a, secondHole.b);
                         }
 
                     } else if (tempfirstHoleA.equals(tempsecondHoleA) == true) {
@@ -767,12 +762,11 @@ public final class Board {
                                         break;
                                     }
 
-                                } else {
-                                    counterLooptemp = counterLooptemp + 1;
-                                    setCounterLoop(counterLooptemp);
-                                    checkPathLoop(secondHole.a, secondHole.b);
                                 }
                             }
+                            counterLooptemp = counterLooptemp + 1;
+                            setCounterLoop(counterLooptemp);
+                            checkPathLoop(secondHole.a, secondHole.b);
                         } else {
                             for (int i = firstHole.b; i <= secondHole.b; i++) {
                                 if (board[firstHole.a][i] != null) {
@@ -790,13 +784,11 @@ public final class Board {
                                         setAiSuccess(true);
                                         break;
                                     }
-
-                                } else {
-                                    counterLooptemp = counterLooptemp + 1;
-                                    setCounterLoop(counterLooptemp);
-                                    checkPathLoop(secondHole.a, secondHole.b);
                                 }
                             }
+                            counterLooptemp = counterLooptemp + 1;
+                            setCounterLoop(counterLooptemp);
+                            checkPathLoop(secondHole.a, secondHole.b);
                         }
                     }
                 }
@@ -827,14 +819,11 @@ public final class Board {
                                 setAiSuccess(true);
                                 break;
                             }
-
-                        } else {
-                            counterLooptemp = counterLooptemp + 1;
-                            setCounterLoop(counterLooptemp);
-                            checkPathLoop(secondHole.a, secondHole.b);
                         }
                     }
-
+                    counterLooptemp = counterLooptemp + 1;
+                    setCounterLoop(counterLooptemp);
+                    checkPathLoop(secondHole.a, secondHole.b);
                 } else {
                     Hole firstHole = outerHole.get(temp + 1);
                     Hole secondHole = outerHole.get(temp + 2);
@@ -860,13 +849,11 @@ public final class Board {
                                     setAiSuccess(true);
                                     break;
                                 }
-
-                            } else {
-                                counterLooptemp = counterLooptemp + 1;
-                                setCounterLoop(counterLooptemp);
-                                checkPathLoop(secondHole.a, secondHole.b);
                             }
                         }
+                        counterLooptemp = counterLooptemp + 1;
+                        setCounterLoop(counterLooptemp);
+                        checkPathLoop(secondHole.a, secondHole.b);
                     } else if (tempfirstHoleA.equals(tempsecondHoleA)) {
 
                         if (tempfirstHoleB > tempsecondHoleB) {
@@ -887,12 +874,11 @@ public final class Board {
                                         break;
                                     }
 
-                                } else {
-                                    counterLooptemp = counterLooptemp + 1;
-                                    setCounterLoop(counterLooptemp);
-                                    checkPathLoop(secondHole.a, secondHole.b);
                                 }
                             }
+                            counterLooptemp = counterLooptemp + 1;
+                            setCounterLoop(counterLooptemp);
+                            checkPathLoop(secondHole.a, secondHole.b);
                         } else {
                             for (int i = firstHole.b; i <= secondHole.b; i++) {
                                 if (board[firstHole.a][i] != null) {
@@ -910,13 +896,11 @@ public final class Board {
                                         setAiSuccess(true);
                                         break;
                                     }
-
-                                } else {
-                                    counterLooptemp = counterLooptemp + 1;
-                                    setCounterLoop(counterLooptemp);
-                                    checkPathLoop(secondHole.a, secondHole.b);
                                 }
                             }
+                            counterLooptemp = counterLooptemp + 1;
+                            setCounterLoop(counterLooptemp);
+                            checkPathLoop(secondHole.a, secondHole.b);
                         }
                     }
                 }
@@ -947,12 +931,11 @@ public final class Board {
                                 break;
                             }
 
-                        } else {
-                            counterLooptemp = counterLooptemp + 1;
-                            setCounterLoop(counterLooptemp);
-                            checkPathLoop(secondHole.a, secondHole.b);
                         }
                     }
+                    counterLooptemp = counterLooptemp + 1;
+                    setCounterLoop(counterLooptemp);
+                    checkPathLoop(secondHole.a, secondHole.b);
 
                 } else {
                     Hole firstHole = innerHole.get(temp - 1);
@@ -981,12 +964,11 @@ public final class Board {
                                         break;
                                     }
 
-                                } else {
-                                    counterLooptemp = counterLooptemp + 1;
-                                    setCounterLoop(counterLooptemp);
-                                    checkPathLoop(secondHole.a, secondHole.b);
                                 }
                             }
+                            counterLooptemp = counterLooptemp + 1;
+                            setCounterLoop(counterLooptemp);
+                            checkPathLoop(secondHole.a, secondHole.b);
                         } else if (tempfirstHoleA < tempsecondHoleA) {
                             for (int i = firstHole.a; i <= secondHole.a; i++) {
                                 if (board[i][firstHole.b] != null) {
@@ -1005,12 +987,11 @@ public final class Board {
                                         break;
                                     }
 
-                                } else {
-                                    counterLooptemp = counterLooptemp + 1;
-                                    setCounterLoop(counterLooptemp);
-                                    checkPathLoop(secondHole.a, secondHole.b);
                                 }
                             }
+                            counterLooptemp = counterLooptemp + 1;
+                            setCounterLoop(counterLooptemp);
+                            checkPathLoop(secondHole.a, secondHole.b);
                         }
 
                     } else if (tempfirstHoleA.equals(tempsecondHoleA)) {
@@ -1031,13 +1012,11 @@ public final class Board {
                                         setAiSuccess(true);
                                         break;
                                     }
-
-                                } else {
-                                    counterLooptemp = counterLooptemp + 1;
-                                    setCounterLoop(counterLooptemp);
-                                    checkPathLoop(secondHole.a, secondHole.b);
                                 }
                             }
+                            counterLooptemp = counterLooptemp + 1;
+                            setCounterLoop(counterLooptemp);
+                            checkPathLoop(secondHole.a, secondHole.b);
                         } else {
                             for (int i = firstHole.b; i <= secondHole.b; i++) {
                                 if (board[firstHole.a][i] != null) {
@@ -1055,13 +1034,11 @@ public final class Board {
                                         setAiSuccess(true);
                                         break;
                                     }
-
-                                } else {
-                                    counterLooptemp = counterLooptemp + 1;
-                                    setCounterLoop(counterLooptemp);
-                                    checkPathLoop(secondHole.a, secondHole.b);
                                 }
                             }
+                            counterLooptemp = counterLooptemp + 1;
+                            setCounterLoop(counterLooptemp);
+                            checkPathLoop(secondHole.a, secondHole.b);
                         }
                     }
                 }
@@ -1091,13 +1068,11 @@ public final class Board {
                                 setAiSuccess(true);
                                 break;
                             }
-
-                        } else {
-                            counterLooptemp = counterLooptemp + 1;
-                            setCounterLoop(counterLooptemp);
-                            checkPathLoop(secondHole.a, secondHole.b);
                         }
                     }
+                    counterLooptemp = counterLooptemp + 1;
+                    setCounterLoop(counterLooptemp);
+                    checkPathLoop(secondHole.a, secondHole.b);
 
                 } else {
                     Hole firstHole = innerHole.get(temp + 1);
@@ -1123,13 +1098,11 @@ public final class Board {
                                     setAiSuccess(true);
                                     break;
                                 }
-
-                            } else {
-                                counterLooptemp = counterLooptemp + 1;
-                                setCounterLoop(counterLooptemp);
-                                checkPathLoop(secondHole.a, secondHole.b);
                             }
                         }
+                        counterLooptemp = counterLooptemp + 1;
+                        setCounterLoop(counterLooptemp);
+                        checkPathLoop(secondHole.a, secondHole.b);
                     } else if (tempfirstHoleA.equals(tempsecondHoleA)) {
 
                         if (tempfirstHoleB > tempsecondHoleB) {
@@ -1149,13 +1122,11 @@ public final class Board {
                                         setAiSuccess(true);
                                         break;
                                     }
-
-                                } else {
-                                    counterLooptemp = counterLooptemp + 1;
-                                    setCounterLoop(counterLooptemp);
-                                    checkPathLoop(secondHole.a, secondHole.b);
                                 }
                             }
+                            counterLooptemp = counterLooptemp + 1;
+                            setCounterLoop(counterLooptemp);
+                            checkPathLoop(secondHole.a, secondHole.b);
                         } else {
                             for (int i = firstHole.b; i <= secondHole.b; i++) {
                                 if (board[firstHole.a][i] != null) {
@@ -1173,13 +1144,11 @@ public final class Board {
                                         setAiSuccess(true);
                                         break;
                                     }
-
-                                } else {
-                                    counterLooptemp = counterLooptemp + 1;
-                                    setCounterLoop(counterLooptemp);
-                                    checkPathLoop(secondHole.a, secondHole.b);
                                 }
                             }
+                            counterLooptemp = counterLooptemp + 1;
+                            setCounterLoop(counterLooptemp);
+                            checkPathLoop(secondHole.a, secondHole.b);
                         }
                     }
                 }
@@ -1331,10 +1300,10 @@ public final class Board {
             setWinner("B");
         }
     }
-    
-    public Integer checkValue(int x, int y){
-        for(Node node : Nodes){
-            if(node.x == x && node.y == y){
+
+    public Integer checkValue(int x, int y) {
+        for (Node node : Nodes) {
+            if (node.x == x && node.y == y) {
                 return Nodes.indexOf(node);
             }
         }
@@ -1342,24 +1311,23 @@ public final class Board {
     }
 
     public void print() {
-            for (int row = 0; row < board.length; row++) {
-                for (int col = 0; col < board.length; col++) {
-                    Integer temp = checkValue(row,col);
-                    if (temp != -1){
-                        System.out.print(" " + Nodes.get(temp).type + " ");
-                    }else {
-                        System.out.print("   ");
-                    }
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board.length; col++) {
+                Integer temp = checkValue(row, col);
+                if (temp != -1) {
+                    System.out.print(" " + Nodes.get(temp).type + " ");
+                } else {
+                    System.out.print("   ");
                 }
-                System.out.println();
             }
+            System.out.println();
+        }
         System.out.println();
-//        for (Node node : Nodes){
-//            System.out.print(node.x);
-//            System.out.print(node.y);
-//            System.out.print(node.type);
-//            System.out.println();
-//        }
+        for (Node node : Nodes) {
+            System.out.print(node.x);
+            System.out.print(node.y);
+            System.out.print(node.type);
+            System.out.println();
+        }
     }
-
 }
