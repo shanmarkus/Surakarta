@@ -287,7 +287,9 @@ public final class Board {
     public void manageNodes(int firstX, int firstY, int secondX, int secondY) {
         Node first = new Node(firstX, firstY, board[firstX][firstY]);
         Node second = new Node(secondX, secondY, board[secondX][secondY]);
-        
+        if(second.type == null){
+            second.type = first.type;
+        }
         for (int i = 0; i < Nodes.size(); i++) {
             Node temp = new Node(Nodes.get(i).x, Nodes.get(i).y, Nodes.get(i).type);
             if (temp.x == first.x && temp.y == first.y) {
@@ -1352,12 +1354,12 @@ public final class Board {
                 System.out.println();
             }
         System.out.println();
-        for (Node node : Nodes){
-            System.out.print(node.x);
-            System.out.print(node.y);
-            System.out.print(node.type);
-            System.out.println();
-        }
+//        for (Node node : Nodes){
+//            System.out.print(node.x);
+//            System.out.print(node.y);
+//            System.out.print(node.type);
+//            System.out.println();
+//        }
     }
 
 }

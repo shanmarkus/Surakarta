@@ -93,20 +93,11 @@ public class Surakarta {
                 a.selectNode(FirstHoleXCoor, FirstHoleYCoor);
                 a.safeLoop(HoleXCoor, HoleYCoor);
                 boolean safeLoop = a.getValidLoop();
-                System.out.print(safeLoop);
                 if (safeLoop == true) {
                     a.eat(HoleXCoor, HoleYCoor);
                     Boolean success = a.getAiSuccess();
                     if (success == true) {
-                        a.manageNodes(FirstHoleXCoor, FirstHoleYCoor, HoleXCoor, HoleYCoor);
-                        ArrayList<Node> Nodes = a.getNodes();
-                        for (int i = 0; i < Nodes.size() ; i++) {
-                            Node c = Nodes.get(i);
-                            if (c.x == a.getFinalX() && c.y == a.getFinalY()) {
-                                Node d = new Node(a.getFinalX(), a.getFinalY(), "E");
-                                Nodes.remove(i);
-                            }
-                        }
+                        a.manageNodes(FirstHoleXCoor, FirstHoleYCoor, HoleYCoor, HoleYCoor);
                         a.print();
                         System.out.println("enemy moving turn ------ ");
                         a.smartAI();
@@ -118,6 +109,7 @@ public class Surakarta {
                     System.out.println("invalid Hole");
                 }
             }
+
         }
     }
 
