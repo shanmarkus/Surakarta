@@ -22,6 +22,7 @@ public final class Board {
     List<Hole> outerHole = new LinkedList<>();
     List<Hole> reverseOuterHole = new LinkedList<>();
     ArrayList<Node> Nodes = new ArrayList<>();
+    ArrayList<Node> possibleNodeMove = new ArrayList<>();
     Integer initX, initY, finalX, finalY;
     String turn, enemyTurn, winner;
     Boolean validLoop;
@@ -30,6 +31,23 @@ public final class Board {
     Integer counterLoop;
     Boolean rangeLoop;
     Integer HoleX, HoleY;
+    Integer getFitness;
+
+    public Integer getGetFitness() {
+        return getFitness;
+    }
+
+    public void setGetFitness(Integer getFitness) {
+        this.getFitness = getFitness;
+    }
+
+    public ArrayList<Node> getPossibleNodeMove() {
+        return possibleNodeMove;
+    }
+
+    public void setPossibleNodeMove(ArrayList<Node> possibleNodeMove) {
+        this.possibleNodeMove = possibleNodeMove;
+    }
 
     public ArrayList<Node> getNodes() {
         return Nodes;
@@ -358,10 +376,65 @@ public final class Board {
             }
         } else {
             System.out.println("RA");
-            RandomMove();
+            smartAIMove();
         }
         //if the AI cannot eat then it just move randomly 03 ilang dari 
 
+    }
+
+    public void smartAIMove() {
+        //check dia kalo jalan bisa dimakan lagi ga 
+        for (Node node : Nodes) {
+            String type = node.type;
+            if (type.equals("E")) {
+                checkPossibleMove(node);
+                //check wether the node has possible move or not
+                if(!possibleNodeMove.isEmpty()){
+                    for(Node possibleNode : possibleNodeMove){
+                        //check if the human can eat this node or not 
+                        for(Node humanNode : Nodes){
+                            if(humanNode.type.equals("H")){
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    //move up bearti dia ke atas layar which is x will - 1
+    //move right bearti dia ke kanan which is y will + 1
+
+    public void checkPossibleMove(Node node) {
+        Node moveUp = new Node(node.x - 1, node.y, node.type);
+        Node moveDown = new Node(node.x + 1, node.y, node.type);
+        Node moveRight = new Node(node.x, node.y + 1, node.type);
+        Node moveLeft = new Node(node.x, node.y - 1, node.type);
+
+        if(moveUp.x < 0 ||moveUp.y < 0 || moveUp.x > 5 || moveUp.y > 5){
+            if(board[moveUp.x][moveUp.y] == null){
+                possibleNodeMove.add(moveUp);
+            }
+        }
+        
+        if(moveDown.x < 0 ||moveDown.y < 0 || moveDown.x > 5 || moveDown.y > 5){
+            if(board[moveDown.x][moveDown.y] == null){
+                possibleNodeMove.add(moveUp);
+            }
+        }
+        
+        if(moveRight.x < 0 ||moveRight.y < 0 || moveRight.x > 5 || moveRight.y > 5){
+            if(board[moveRight.x][moveRight.y] == null){
+                possibleNodeMove.add(moveRight);
+            }
+        }
+        
+        if(moveLeft.x < 0 ||moveLeft.y < 0 || moveLeft.x > 5 || moveLeft.y > 5){
+            if(board[moveLeft.x][moveLeft.y] == null){
+                possibleNodeMove.add(moveLeft);
+            }
+        }
+        
     }
 
     public void RandomMove() {
@@ -378,6 +451,7 @@ public final class Board {
                 safe = safeMove(nextX + node.x, nextY + node.y);
                 if (safe == true) {
                     placeNode();
+                    System.out.println("1");
                 } else {
                     RandomMove();
                 }
@@ -387,6 +461,7 @@ public final class Board {
                 safe = safeMove(nextX + node.x, nextY + node.y);
                 if (safe == true) {
                     placeNode();
+                    System.out.println("2");
                 } else {
                     RandomMove();
                 }
@@ -396,6 +471,7 @@ public final class Board {
                 safe = safeMove(nextX + node.x, nextY + node.y);
                 if (safe == true) {
                     placeNode();
+                    System.out.println("3");
                 } else {
                     RandomMove();
                 }
@@ -405,6 +481,7 @@ public final class Board {
                 safe = safeMove(nextX + node.x, nextY + node.y);
                 if (safe == true) {
                     placeNode();
+                    System.out.println("4");
                 } else {
                     RandomMove();
                 }
@@ -413,6 +490,7 @@ public final class Board {
                 Integer nextY = rand.nextInt(2) - 1;
                 safe = safeMove(nextX + node.x, nextY + node.y);
                 if (safe == true) {
+                    System.out.println("5");
                     placeNode();
                 } else {
                     RandomMove();
@@ -423,6 +501,7 @@ public final class Board {
                 safe = safeMove(nextX + node.x, nextY + node.y);
                 if (safe == true) {
                     placeNode();
+                    System.out.println("6");
                 } else {
                     RandomMove();
                 }
@@ -432,6 +511,7 @@ public final class Board {
                 safe = safeMove(nextX + node.x, nextY + node.y);
                 if (safe == true) {
                     placeNode();
+                    System.out.println("7");
                 } else {
                     RandomMove();
                 }

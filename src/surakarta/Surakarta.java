@@ -116,6 +116,7 @@ public class Surakarta {
     public static void playWithDumbAI() {
         Board a = new Board(6);
         String win = "B";
+        a.setTurn("H");
 
         while (win.equals("B")) {
             Integer humanChoices = Integer.parseInt(JOptionPane.showInputDialog("1. Move your pawn \n 2. eat enemeny"));
@@ -129,8 +130,10 @@ public class Surakarta {
                 a.placeNode();
                 a.print();
                 System.out.println("enemy moving turn ------ ");
+                a.setTurn("E");
                 a.dumbAI();
                 a.print();
+                a.setTurn("H");
             } else if (humanChoices == 2) {
                 Integer FirstHoleXCoor = Integer.parseInt(JOptionPane.showInputDialog("Input the node x-coordinate"));
                 Integer FirstHoleYCoor = Integer.parseInt(JOptionPane.showInputDialog("Input the node y-coordinate"));
@@ -142,9 +145,11 @@ public class Surakarta {
                 if (safeLoop == true) {
                     a.eat(HoleXCoor, HoleYCoor);
                     a.print();
+                    a.setTurn("E");
                     System.out.println("enemy moving turn ------ ");
                     a.dumbAI();
                     a.print();
+                    a.setTurn("H");
                 } else {
                     System.out.println("wrong turn");
                 }
