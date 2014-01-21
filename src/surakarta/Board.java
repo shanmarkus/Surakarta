@@ -377,7 +377,7 @@ public final class Board {
                 }
             }
         } else {
-            System.out.println("RA");
+            System.out.println("AI MOVE");
             smartAIMove();
         }
         //if the AI cannot eat then it just move randomly 03 ilang dari 
@@ -632,14 +632,18 @@ public final class Board {
         int highest = fitness;
         for (int i = 1; i < Astar.size(); i++) {
             nextfitness = Astar.get(i).getFitness();
-            System.out.println(nextfitness + "sagasg" + highest);
             if (nextfitness > highest) {
                 highest = nextfitness;
                 highest_index=i;
             }
         }
         
-        
+        Node start = Astar.get(highest_index).getNodeStart();
+        Node move = Astar.get(highest_index).getNodeMove();
+        selectNode(start.x, start.y);
+        safeMove(move.x, move.y);
+        placeNode();
+        manageNodes(start.x, start.y,move.x, move.y);
         
     }
 
@@ -1655,13 +1659,13 @@ public final class Board {
             System.out.println();
         }
         System.out.println();
-//        for (Node node : Nodes) {
-//            System.out.print(node.x);
-//            System.out.print(node.y);
-//            System.out.print(node.type);
-//            System.out.println();
-//        }
-        System.out.print(Astar.size());
+        for (Node node : Nodes) {
+            System.out.print(node.x);
+            System.out.print(node.y);
+            System.out.print(node.type);
+            System.out.println();
+        }
+//        System.out.print(Astar.size());
 //        for (NodeFitness nodefitness : Astar) {
 //            System.out.print(nodefitness.getNodeStart().x + " " + nodefitness.getNodeStart().y);
 //            System.out.println();

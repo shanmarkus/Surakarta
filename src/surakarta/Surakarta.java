@@ -81,6 +81,7 @@ public class Surakarta {
                 a.selectNode(FirstHoleXCoor, FirstHoleYCoor);
                 a.safeMove(SecondHoleXCoor, SecondHoleYCoor);
                 a.placeNode();
+                a.manageNodes(FirstHoleXCoor, FirstHoleYCoor, SecondHoleXCoor, SecondHoleYCoor);
                 a.print();
                 System.out.println("enemy moving turn ------ ");
                 a.smartAI();
