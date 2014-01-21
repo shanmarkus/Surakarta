@@ -228,31 +228,6 @@ public final class Board {
         outerHole.add(new Hole(5, 2));
     }
 
-    //Check wether user move is in the 16 loop holes or not
-//    public boolean loopMove(int x, int y) {
-//        Hole temp;
-//        Iterator i = innerHole.iterator();
-//        Iterator j = outerHole.iterator();
-//        while (i.hasNext()) {
-//            temp = (Hole) i.next();
-//            int tempx = temp.a;
-//            int tempy = temp.b;
-//            if (x == tempx && y == tempy) {
-//                return true;
-//            }
-//        }
-//
-//        while (j.hasNext()) {
-//            temp = (Hole) j.next();
-//            int tempx = temp.a;
-//            int tempy = temp.b;
-//            if (x == tempx && y == tempy) {
-//                return true;
-//            }
-//        }
-//
-//        return false;
-//    }
 //check wether the move is legal or not
     public boolean safeMove(int x, int y) {
         int firstX = getInitX();
@@ -327,18 +302,12 @@ public final class Board {
             if (node.type.equals("E")) {
                 for (Hole holeInner : innerHole) {
                     selectNode(node.x, node.y);
-                    //
-                    System.out.println(node.x + " " + node.y + " " + node.type);
-                    System.out.println("Hole inner " + holeInner.a + " " + holeInner.b);
                     checkLoopRange(holeInner.a, holeInner.b);
                     boolean loopRangeTemp = getRangeLoop();
                     if (loopRangeTemp == true) {
-                        //
-                        System.out.println("1");
                         safeLoop(holeInner.a, holeInner.b);
                         boolean safe = getValidLoop();
                         if (safe == true) {
-                            System.out.println("1.1");
                             eat(holeInner.a, holeInner.b);
                             boolean success = getAiSuccess();
                             if (success == true) {
