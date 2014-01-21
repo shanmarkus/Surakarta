@@ -84,6 +84,7 @@ public class Surakarta {
                 a.print();
                 System.out.println("enemy moving turn ------ ");
                 a.smartAI();
+                a.aiMove();
                 a.print();
             } else if (humanChoices == 2) {
                 Integer FirstHoleXCoor = Integer.parseInt(JOptionPane.showInputDialog("Input the node x-coordinate"));

@@ -5,6 +5,7 @@
 package surakarta;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -384,6 +385,7 @@ public final class Board {
     }
 
     public void smartAIMove() {
+        Astar.clear();
         //check dia kalo jalan bisa dimakan lagi ga 
         for (Node node : Nodes) {
             String type = node.type;
@@ -613,13 +615,32 @@ public final class Board {
                                 }
                             }
                         }
-                        NodeFitness temp = new NodeFitness(possibleNode, getFitness());
+                        NodeFitness temp = new NodeFitness(node, possibleNode, getFitness());
                         Astar.add(temp);
                     }
                 }
             }
-
         }
+    }
+
+    public void aiMove() {
+        //Astar (Node, Fitness)
+
+        int fitness = Astar.get(0).getFitness();
+        int nextfitness = 0;
+        int highest_index=0;
+        int highest = fitness;
+        for (int i = 1; i < Astar.size(); i++) {
+            nextfitness = Astar.get(i).getFitness();
+            System.out.println(nextfitness + "sagasg" + highest);
+            if (nextfitness > highest) {
+                highest = nextfitness;
+                highest_index=i;
+            }
+        }
+        
+        
+        
     }
 
     public void checkPossibleMove(Node node) {
@@ -1641,10 +1662,13 @@ public final class Board {
 //            System.out.println();
 //        }
         System.out.print(Astar.size());
-        for (NodeFitness nodefitness : Astar) {
-            System.out.print(nodefitness.node.x + " " + nodefitness.node.y);
-            System.out.print(nodefitness.fitness);
-            System.out.println();
-        }
+//        for (NodeFitness nodefitness : Astar) {
+//            System.out.print(nodefitness.getNodeStart().x + " " + nodefitness.getNodeStart().y);
+//            System.out.println();
+//            System.out.print(nodefitness.getNodeMove().x + " " + nodefitness.getNodeMove().y);
+//            System.out.print(nodefitness.getFitness());
+//            System.out.println();
+//        }
+        
     }
 }
