@@ -1215,6 +1215,9 @@ public final class Board {
                             for (int i = firstHole.b; i >= secondHole.b; i--) {
                                 if (board[firstHole.a][i] != null) {
                                     String pieces = board[firstHole.a][i];
+                                    System.out.println("*******************************");
+                                    System.out.println(pieces);
+                                    System.out.println(turn);
                                     if (pieces.equals(turn)) {
                                         //failed to eat
                                         setAiSuccess(false);
@@ -1461,9 +1464,12 @@ public final class Board {
                     } else if (tempfirstHoleA.equals(tempsecondHoleA)) {
 
                         if (tempfirstHoleB > tempsecondHoleB) {
+                            System.out.println("-------------------------------------");
                             for (int i = firstHole.b; i >= secondHole.b; i--) {
                                 if (board[firstHole.a][i] != null) {
+                                    System.out.println("++++++++++++++++++++++++++++++");
                                     String pieces = board[firstHole.a][i];
+                                    System.out.println(pieces);
                                     if (pieces.equals(turn)) {
                                         //failed to loop
                                         setAiSuccess(false);
@@ -1676,8 +1682,10 @@ public final class Board {
             for (int col = 0; col < board.length; col++) {
                 Integer temp = checkValue(row, col);
                 if (temp != -1) {
+                    board[row][col] = Nodes.get(temp).type;
                     System.out.print(" " + Nodes.get(temp).type + " ");
                 } else {
+                    board[row][col] = null;
                     System.out.print("   ");
                 }
             }
