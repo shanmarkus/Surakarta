@@ -379,8 +379,11 @@ public final class Board {
         if (success == true) {
             int firstNodePosition = checkValue(getInitX(), getInitY());
             int secondNodePosition = checkValue(getFinalX(), getFinalY());
+            Node new1 = new Node(getFinalX(), getFinalY(), turn);
             if (firstNodePosition != -1 && secondNodePosition != -1) {
-                manageNodes(Nodes.get(firstNodePosition), Nodes.get(secondNodePosition));
+                Nodes.remove(firstNodePosition);
+                //Nodes.remove(secondNodePosition);
+                Nodes.add(new1);
             }
             for (int i = 0; i < Nodes.size(); i++) {
                 Node a = Nodes.get(i);
@@ -1221,15 +1224,15 @@ public final class Board {
                                     if (pieces.equals(turn)) {
                                         //failed to eat
                                         setAiSuccess(false);
-                                        break;
-                                    } else {
+                                        return;
+                                    } else if (!pieces.equals(turn)){
                                         //eat opponent pieces
                                         setFinalX(firstHole.a);
                                         setFinalY(i);
-                                        board[firstHole.a][i] = turn;
-                                        board[getInitX()][getInitY()] = null;
+//                                        board[firstHole.a][i] = turn;
+//                                        board[getInitX()][getInitY()] = null;
                                         setAiSuccess(true);
-                                        break;
+                                        return;
                                     }
 
                                 }
@@ -1634,7 +1637,6 @@ public final class Board {
             int yi = getInitY();
             int temp = checkValue(xi, yi);
             if (temp != -1) {
-                System.out.println("MAOOOOOOOOOO CIAOOOO");
                 String type = Nodes.get(temp).type;
                 setTurn(type);
                 checkPathLoop(x, y);
