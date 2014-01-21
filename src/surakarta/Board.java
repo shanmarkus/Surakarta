@@ -325,17 +325,23 @@ public final class Board {
         while (itr.hasNext()) {
             Node node = (Node) itr.next();
             if (node.type.equals("E")) {
+                System.out.println(node.x + " " + node.y + " " + node.type);
+                System.out.println("1");
                 for (Hole holeInner : innerHole) {
+                    System.out.println(holeInner.a + " HOLEEE IN " + holeInner.b);
                     selectNode(node.x, node.y);
                     checkLoopRange(holeInner.a, holeInner.b);
                     boolean loopRangeTemp = getRangeLoop();
                     if (loopRangeTemp == true) {
+                        System.out.println("1.1");
                         safeLoop(holeInner.a, holeInner.b);
                         boolean safe = getValidLoop();
                         if (safe == true) {
+                            System.out.println("1.2");
                             eat(holeInner.a, holeInner.b);
                             boolean success = getAiSuccess();
                             if (success == true) {
+                                System.out.println("1.3");
                                 System.out.println(node.x + " " + node.y);
                                 System.out.println(holeInner.a + " " + holeInner.b);
                                 System.out.println("IL");
@@ -346,13 +352,16 @@ public final class Board {
                 }
 
                 for (Hole holeOuter : outerHole) {
+                    System.out.println(holeOuter.a + " HOLEEE OUT " + holeOuter.b);
                     selectNode(node.x, node.y);//(4,0)
                     checkLoopRange(holeOuter.a, holeOuter.b); //CLR(2,0)
                     boolean loopRangeTemp = getRangeLoop();
                     if (loopRangeTemp == true) {
+                        System.out.println("2.1");
                         safeLoop(holeOuter.a, holeOuter.b);
                         boolean safe = getValidLoop();
                         if (safe == true) {
+                            System.out.println("2.2");
                             eat(holeOuter.a, holeOuter.b);
                             boolean success = getAiSuccess();
                             if (success == true) {
@@ -650,7 +659,7 @@ public final class Board {
             Node move = Astar.get(highest_index).getNodeMove();
             selectNode(start.x, start.y);
             safeMove(move.x, move.y);
-            manageNodes(start,move);
+            manageNodes(start, move);
         }
 
 
@@ -1617,8 +1626,14 @@ public final class Board {
         if (validLooptemp == true) {
             int xi = getInitX();
             int yi = getInitY();
-            setTurn(board[xi][yi]);
-            checkPathLoop(x, y);
+            int temp = checkValue(xi, yi);
+            if (temp != -1) {
+                System.out.println("MAOOOOOOOOOO CIAOOOO");
+                String type = Nodes.get(temp).type;
+                setTurn(type);
+                checkPathLoop(x, y);
+            }
+
         } else {
             setAiSuccess(false);
         }
