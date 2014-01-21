@@ -327,12 +327,18 @@ public final class Board {
             if (node.type.equals("E")) {
                 for (Hole holeInner : innerHole) {
                     selectNode(node.x, node.y);
+                    //
+                    System.out.println(node.x + " " + node.y + " " + node.type);
+                    System.out.println("Hole inner " + holeInner.a + " " + holeInner.b);
                     checkLoopRange(holeInner.a, holeInner.b);
                     boolean loopRangeTemp = getRangeLoop();
                     if (loopRangeTemp == true) {
+                        //
+                        System.out.println("1");
                         safeLoop(holeInner.a, holeInner.b);
                         boolean safe = getValidLoop();
                         if (safe == true) {
+                            System.out.println("1.1");
                             eat(holeInner.a, holeInner.b);
                             boolean success = getAiSuccess();
                             if (success == true) {
@@ -347,12 +353,20 @@ public final class Board {
 
                 for (Hole holeOuter : outerHole) {
                     selectNode(node.x, node.y);//(4,0)
+                    //
+                    System.out.println(node.x + " " + node.y + " " + node.type);
+                    System.out.println("Hole Outer " + holeOuter.a + " " + holeOuter.b);
                     checkLoopRange(holeOuter.a, holeOuter.b); //CLR(2,0)
                     boolean loopRangeTemp = getRangeLoop();
                     if (loopRangeTemp == true) {
+                        //
+                        System.out.println("2");
                         safeLoop(holeOuter.a, holeOuter.b);
                         boolean safe = getValidLoop();
+                        System.out.println(safe);
                         if (safe == true) {
+                            //
+                            System.out.println("2.1");
                             eat(holeOuter.a, holeOuter.b);
                             boolean success = getAiSuccess();
                             if (success == true) {
@@ -1533,45 +1547,60 @@ public final class Board {
 
         if (tempNodeX == x && tempNodeY != y) {
             if (tempNodeY < y) {
-                for (int i = tempNodeY; i <= y; i++) {
-                    if (board[x][i] != null) {
+                //example will be when tempNodeX is 1 tempNodeY is 2 
+                //Hole will be 1 5 
+                //2 < 5
+                do {
+                    tempNodeY += 1;
+                    int checkNode = checkValue(x, tempNodeY);
+                    if (checkNode == -1) {
+                        setValidLoop(true);
+                    } else {
                         setValidLoop(false);
                         break;
-                    } else {
-                        setValidLoop(true);
                     }
-                }
+                } while (tempNodeY <= y);
             } else {
-                for (int i = tempNodeY; i >= y; i--) {
-                    if (board[x][i] != null) {
+                //example will be when tempNodeX is 1 tempNodeY is 3 
+                //Hole will be 1 0 
+                //2 < 5
+                do {
+                    tempNodeY -= 1;
+                    int checkNode = checkValue(x, tempNodeY);
+                    if (checkNode == -1) {
+                        setValidLoop(true);
+                    } else {
                         setValidLoop(false);
                         break;
-                    } else {
-                        setValidLoop(true);
                     }
-                }
+                } while (tempNodeY >= y);
             }
         } else if (tempNodeY == y && tempNodeX != x) {
-            //40 
-            //20
+            //tempNodex 4  tempNodey 3
+            //x 5 y 3
             if (tempNodeX < x) {
-                for (int i = tempNodeX; i <= x; i++) {
-                    if (board[i][y] != null) {
+                do {
+                    tempNodeX += 1;
+                    int checkNode = checkValue(tempNodeX, y);
+                    if (checkNode == -1) {
+                        setValidLoop(true);
+                    } else {
                         setValidLoop(false);
                         break;
-                    } else {
-                        setValidLoop(true);
                     }
-                }
+                } while (tempNodeX <= x);
+
             } else {
-                for (int i = tempNodeX; i >= x; i--) {
-                    if (board[i][x] != null) {
+                do {
+                    tempNodeX -= 1;
+                    int checkNode = checkValue(tempNodeX, y);
+                    if (checkNode == -1) {
+                        setValidLoop(true);
+                    } else {
                         setValidLoop(false);
                         break;
-                    } else {
-                        setValidLoop(true);
                     }
-                }
+                } while (tempNodeX >= x);
             }
         } else if (tempNodeY == y && tempNodeX == x) {
             setValidLoop(true);
@@ -1645,12 +1674,12 @@ public final class Board {
             System.out.println();
         }
         System.out.println();
-        for (Node node : Nodes) {
-            System.out.print(node.x);
-            System.out.print(node.y);
-            System.out.print(node.type);
-            System.out.println();
-        }
+//        for (Node node : Nodes) {
+//            System.out.print(node.x);
+//            System.out.print(node.y);
+//            System.out.print(node.type);
+//            System.out.println();
+//        }
 //        System.out.print(Astar.size());
 //        for (NodeFitness nodefitness : Astar) {
 //            System.out.print(nodefitness.getNodeStart().x + " " + nodefitness.getNodeStart().y);
