@@ -326,7 +326,6 @@ public final class Board {
             Node node = (Node) itr.next();
             if (node.type.equals("E")) {
                 for (Hole holeInner : innerHole) {
-                    System.out.println(holeInner.a + " HOLEEE IN " + holeInner.b);
                     selectNode(node.x, node.y);
                     checkLoopRange(holeInner.a, holeInner.b);
                     boolean loopRangeTemp = getRangeLoop();
