@@ -325,23 +325,18 @@ public final class Board {
         while (itr.hasNext()) {
             Node node = (Node) itr.next();
             if (node.type.equals("E")) {
-                System.out.println(node.x + " " + node.y + " " + node.type);
-                System.out.println("1");
                 for (Hole holeInner : innerHole) {
                     System.out.println(holeInner.a + " HOLEEE IN " + holeInner.b);
                     selectNode(node.x, node.y);
                     checkLoopRange(holeInner.a, holeInner.b);
                     boolean loopRangeTemp = getRangeLoop();
                     if (loopRangeTemp == true) {
-                        System.out.println("1.1");
                         safeLoop(holeInner.a, holeInner.b);
                         boolean safe = getValidLoop();
                         if (safe == true) {
-                            System.out.println("1.2");
                             eat(holeInner.a, holeInner.b);
                             boolean success = getAiSuccess();
                             if (success == true) {
-                                System.out.println("1.3");
                                 System.out.println(node.x + " " + node.y);
                                 System.out.println(holeInner.a + " " + holeInner.b);
                                 System.out.println("IL");
@@ -352,16 +347,13 @@ public final class Board {
                 }
 
                 for (Hole holeOuter : outerHole) {
-                    System.out.println(holeOuter.a + " HOLEEE OUT " + holeOuter.b);
                     selectNode(node.x, node.y);//(4,0)
                     checkLoopRange(holeOuter.a, holeOuter.b); //CLR(2,0)
                     boolean loopRangeTemp = getRangeLoop();
                     if (loopRangeTemp == true) {
-                        System.out.println("2.1");
                         safeLoop(holeOuter.a, holeOuter.b);
                         boolean safe = getValidLoop();
                         if (safe == true) {
-                            System.out.println("2.2");
                             eat(holeOuter.a, holeOuter.b);
                             boolean success = getAiSuccess();
                             if (success == true) {
@@ -1025,15 +1017,13 @@ public final class Board {
                             if (pieces.equals(turn)) {
                                 //failed to eat
                                 setAiSuccess(false);
-                                break;
+                                return;
                             } else {
                                 //eat opponent pieces
                                 setFinalX(i);
                                 setFinalY(firstHole.b);
-                                board[i][firstHole.b] = turn;
-                                board[getInitX()][getInitY()] = null;
                                 setAiSuccess(true);
-                                break;
+                                return;
                             }
 
                         }
@@ -1058,16 +1048,14 @@ public final class Board {
                                     if (pieces.equals(turn)) {
                                         //failed to eat
                                         setAiSuccess(false);
-                                        break;
+                                        return;
 
                                     } else {
                                         //eat opponent pieces
                                         setFinalX(i);
                                         setFinalY(firstHole.b);
-                                        board[i][firstHole.b] = turn;
-                                        board[getInitX()][getInitY()] = null;
                                         setAiSuccess(true);
-                                        break;
+                                        return;
                                     }
 
                                 }
@@ -1082,16 +1070,14 @@ public final class Board {
                                     if (pieces.equals(turn)) {
                                         //failed to eat
                                         setAiSuccess(false);
-                                        break;
+                                        return;
 
                                     } else {
                                         //eat opponent pieces
                                         setFinalX(i);
                                         setFinalY(firstHole.b);
-                                        board[i][firstHole.b] = turn;
-                                        board[getInitX()][getInitY()] = null;
                                         setAiSuccess(true);
-                                        break;
+                                        return;
                                     }
 
                                 }
@@ -1109,15 +1095,13 @@ public final class Board {
                                     if (pieces.equals(turn)) {
                                         //failed to eat
                                         setAiSuccess(false);
-                                        break;
+                                        return;
                                     } else {
                                         //eat opponent pieces
                                         setFinalX(firstHole.a);
                                         setFinalY(i);
-                                        board[firstHole.a][i] = turn;
-                                        board[getInitX()][getInitY()] = null;
                                         setAiSuccess(true);
-                                        break;
+                                        return;
                                     }
 
                                 }
@@ -1132,15 +1116,13 @@ public final class Board {
                                     if (pieces.equals(turn)) {
                                         //failed to eat
                                         setAiSuccess(false);
-                                        break;
+                                        return;
                                     } else {
                                         //eat opponent pieces
                                         setFinalX(firstHole.a);
                                         setFinalY(i);
-                                        board[firstHole.a][i] = turn;
-                                        board[getInitX()][getInitY()] = null;
                                         setAiSuccess(true);
-                                        break;
+                                        return;
                                     }
                                 }
                             }
@@ -1167,15 +1149,13 @@ public final class Board {
                             if (pieces.equals(turn)) {
                                 //failed to eat
                                 setAiSuccess(false);
-                                break;
+                                return;
                             } else {
                                 //eat opponent pieces
                                 setFinalX(i);
                                 setFinalY(firstHole.b);
-                                board[i][firstHole.b] = turn;
-                                board[getInitX()][getInitY()] = null;
                                 setAiSuccess(true);
-                                break;
+                                return;
                             }
                         }
                     }
@@ -1197,15 +1177,13 @@ public final class Board {
                                 if (pieces.equals(turn)) {
                                     //failed to eat
                                     setAiSuccess(false);
-                                    break;
+                                    return;
                                 } else {
                                     //eat opponent pieces
                                     setFinalX(i);
                                     setFinalY(firstHole.b);
-                                    board[i][firstHole.b] = turn;
-                                    board[getInitX()][getInitY()] = null;
                                     setAiSuccess(true);
-                                    break;
+                                    return;
                                 }
                             }
                         }
@@ -1218,14 +1196,11 @@ public final class Board {
                             for (int i = firstHole.b; i >= secondHole.b; i--) {
                                 if (board[firstHole.a][i] != null) {
                                     String pieces = board[firstHole.a][i];
-                                    System.out.println("*******************************");
-                                    System.out.println(pieces);
-                                    System.out.println(turn);
                                     if (pieces.equals(turn)) {
                                         //failed to eat
                                         setAiSuccess(false);
                                         return;
-                                    } else if (!pieces.equals(turn)){
+                                    } else if (!pieces.equals(turn)) {
                                         //eat opponent pieces
                                         setFinalX(firstHole.a);
                                         setFinalY(i);
@@ -1247,15 +1222,13 @@ public final class Board {
                                     if (pieces.equals(turn)) {
                                         //failed to eat
                                         setAiSuccess(false);
-                                        break;
+                                        return;
                                     } else {
                                         //eat opponent pieces
                                         setFinalX(firstHole.a);
                                         setFinalY(i);
-                                        board[firstHole.a][i] = turn;
-                                        board[getInitX()][getInitY()] = null;
                                         setAiSuccess(true);
-                                        break;
+                                        return;
                                     }
                                 }
                             }
@@ -1281,15 +1254,13 @@ public final class Board {
                             if (pieces.equals(turn)) {
                                 //failed to eat
                                 setAiSuccess(false);
-                                break;
+                                return;
                             } else {
                                 //eat opponent pieces
                                 setFinalX(i);
                                 setFinalY(firstHole.b);
-                                board[i][firstHole.b] = turn;
-                                board[getInitX()][getInitY()] = null;
                                 setAiSuccess(true);
-                                break;
+                                return;
                             }
 
                         }
@@ -1314,15 +1285,13 @@ public final class Board {
                                     if (pieces.equals(turn)) {
                                         //failed to eat
                                         setAiSuccess(false);
-                                        break;
+                                        return;
                                     } else {
                                         //eat opponent pieces
                                         setFinalX(i);
                                         setFinalY(firstHole.b);
-                                        board[i][firstHole.b] = turn;
-                                        board[getInitX()][getInitY()] = null;
                                         setAiSuccess(true);
-                                        break;
+                                        return;
                                     }
 
                                 }
@@ -1337,15 +1306,13 @@ public final class Board {
                                     if (pieces.equals(turn)) {
                                         //failed to eat
                                         setAiSuccess(false);
-                                        break;
+                                        return;
                                     } else {
                                         //eat opponent pieces
                                         setFinalX(i);
                                         setFinalY(firstHole.b);
-                                        board[i][firstHole.b] = turn;
-                                        board[getInitX()][getInitY()] = null;
                                         setAiSuccess(true);
-                                        break;
+                                        return;
                                     }
 
                                 }
@@ -1363,15 +1330,13 @@ public final class Board {
                                     if (pieces.equals(turn)) {
                                         //failed to eat
                                         setAiSuccess(false);
-                                        break;
+                                        return;
                                     } else {
                                         //eat opponent pieces
                                         setFinalX(firstHole.a);
                                         setFinalY(i);
-                                        board[firstHole.a][i] = turn;
-                                        board[getInitX()][getInitY()] = null;
                                         setAiSuccess(true);
-                                        break;
+                                        return;
                                     }
                                 }
                             }
@@ -1385,15 +1350,13 @@ public final class Board {
                                     if (pieces.equals(turn)) {
                                         //failed to eat
                                         setAiSuccess(false);
-                                        break;
+                                        return;
                                     } else {
                                         //eat opponent pieces
                                         setFinalX(firstHole.a);
                                         setFinalY(i);
-                                        board[firstHole.a][i] = turn;
-                                        board[getInitX()][getInitY()] = null;
                                         setAiSuccess(true);
-                                        break;
+                                        return;
                                     }
                                 }
                             }
@@ -1419,15 +1382,13 @@ public final class Board {
                             if (pieces.equals(turn)) {
                                 //failed to eat
                                 setAiSuccess(false);
-                                break;
+                                return;
                             } else {
                                 //eat opponent pieces
                                 setFinalX(i);
                                 setFinalY(firstHole.b);
-                                board[i][firstHole.b] = turn;
-                                board[getInitX()][getInitY()] = null;
                                 setAiSuccess(true);
-                                break;
+                                return;
                             }
                         }
                     }
@@ -1449,15 +1410,13 @@ public final class Board {
                                 if (pieces.equals(turn)) {
                                     //failed to eat
                                     setAiSuccess(false);
-                                    break;
+                                    return;
                                 } else {
                                     //eat opponent pieces
                                     setFinalX(i);
                                     setFinalY(firstHole.b);
-                                    board[i][firstHole.b] = turn;
-                                    board[getInitX()][getInitY()] = null;
                                     setAiSuccess(true);
-                                    break;
+                                    return;
                                 }
                             }
                         }
@@ -1467,24 +1426,19 @@ public final class Board {
                     } else if (tempfirstHoleA.equals(tempsecondHoleA)) {
 
                         if (tempfirstHoleB > tempsecondHoleB) {
-                            System.out.println("-------------------------------------");
                             for (int i = firstHole.b; i >= secondHole.b; i--) {
                                 if (board[firstHole.a][i] != null) {
-                                    System.out.println("++++++++++++++++++++++++++++++");
                                     String pieces = board[firstHole.a][i];
-                                    System.out.println(pieces);
                                     if (pieces.equals(turn)) {
                                         //failed to loop
                                         setAiSuccess(false);
-                                        break;
+                                        return;
                                     } else {
                                         //eat opponent pieces
                                         setFinalX(firstHole.a);
                                         setFinalY(i);
-                                        board[firstHole.a][i] = turn;
-                                        board[getInitX()][getInitY()] = null;
                                         setAiSuccess(true);
-                                        break;
+                                        return;
                                     }
                                 }
                             }
@@ -1498,15 +1452,13 @@ public final class Board {
                                     if (pieces.equals(turn)) {
                                         //failed to loop
                                         setAiSuccess(false);
-                                        break;
+                                        return;
                                     } else {
                                         //eat opponent pieces
                                         setFinalX(firstHole.a);
                                         setFinalY(i);
-                                        board[firstHole.a][i] = turn;
-                                        board[getInitX()][getInitY()] = null;
                                         setAiSuccess(true);
-                                        break;
+                                        return;
                                     }
                                 }
                             }
