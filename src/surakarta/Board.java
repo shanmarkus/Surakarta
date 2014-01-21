@@ -403,6 +403,7 @@ public final class Board {
                                 ArrayList<Hole> possibleInnerHole = new ArrayList<>();
                                 ArrayList<Hole> possibleOuterHole = new ArrayList<>();
 
+
                                 //check possible hole in inner hole loop
                                 for (Hole inHole : innerHole) {
                                     checkLoopRange(inHole.a, inHole.b);
@@ -465,16 +466,18 @@ public final class Board {
                                     setFitness(tempFitness + 1);
                                 }
                             }
-                            NodeFitness temp = new NodeFitness(possibleNode, getFitness());
-                            Astar.add(temp);
                         }
+                        NodeFitness temp = new NodeFitness(possibleNode, getFitness());
+                        Astar.add(temp);
                     }
                 }
             }
+
         }
     }
 
     public void checkPossibleMove(Node node) {
+        possibleNodeMove.clear();
         Node moveUp = new Node(node.x - 1, node.y, node.type);
         Node moveDown = new Node(node.x + 1, node.y, node.type);
         Node moveRight = new Node(node.x, node.y + 1, node.type);
@@ -483,23 +486,27 @@ public final class Board {
         if (moveUp.x < 0 || moveUp.y < 0 || moveUp.x > 5 || moveUp.y > 5) {
             //do nothing
         } else {
-            if (board[moveUp.x][moveUp.y] == null) {
+            Integer temp = checkValue(moveUp.x, moveUp.y);
+            if (temp == -1) {
                 possibleNodeMove.add(moveUp);
             }
         }
 
+
         if (moveDown.x < 0 || moveDown.y < 0 || moveDown.x > 5 || moveDown.y > 5) {
             //do nothing
         } else {
-            if (board[moveDown.x][moveDown.y] == null) {
-                possibleNodeMove.add(moveUp);
+            Integer temp = checkValue(moveDown.x, moveDown.y);
+            if (temp == -1) {
+                possibleNodeMove.add(moveDown);
             }
         }
 
         if (moveRight.x < 0 || moveRight.y < 0 || moveRight.x > 5 || moveRight.y > 5) {
             //do nothing
         } else {
-            if (board[moveRight.x][moveRight.y] == null) {
+            Integer temp = checkValue(moveRight.x, moveRight.y);
+            if (temp == -1) {
                 possibleNodeMove.add(moveRight);
             }
         }
@@ -507,7 +514,8 @@ public final class Board {
         if (moveLeft.x < 0 || moveLeft.y < 0 || moveLeft.x > 5 || moveLeft.y > 5) {
             //do nothing
         } else {
-            if (board[moveLeft.x][moveLeft.y] == null) {
+            Integer temp = checkValue(moveLeft.x, moveLeft.y);
+            if (temp == -1) {
                 possibleNodeMove.add(moveLeft);
             }
         }
@@ -1486,6 +1494,7 @@ public final class Board {
 //            System.out.print(node.type);
 //            System.out.println();
 //        }
+        System.out.print(Astar.size());
         for (NodeFitness nodefitness : Astar) {
             System.out.print(nodefitness.node.x + " " + nodefitness.node.y);
             System.out.print(nodefitness.fitness);
