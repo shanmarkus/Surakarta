@@ -304,9 +304,7 @@ public final class Board {
         }
     }
 
-    public void manageNodes(int firstX, int firstY, int secondX, int secondY) {
-        Node first = new Node(firstX, firstY, board[firstX][firstY]);
-        Node second = new Node(secondX, secondY, board[secondX][secondY]);
+    public void manageNodes(Node first, Node second) {
         if (second.type == null) {
             second.type = first.type;
         }
@@ -370,7 +368,11 @@ public final class Board {
         }
         boolean success = getAiSuccess();
         if (success == true) {
-            manageNodes(getInitX(), getInitY(), getFinalX(), getFinalY());
+            int firstNodePosition = checkValue(getInitX(), getInitY());
+            int secondNodePosition = checkValue(getFinalX(), getFinalY());
+            if (firstNodePosition != -1 && secondNodePosition != -1) {
+                manageNodes(Nodes.get(firstNodePosition), Nodes.get(secondNodePosition));
+            }
             for (int i = 0; i < Nodes.size(); i++) {
                 Node a = Nodes.get(i);
                 if (a.x == getFinalX() && a.y == getFinalY()) {
@@ -648,8 +650,7 @@ public final class Board {
             Node move = Astar.get(highest_index).getNodeMove();
             selectNode(start.x, start.y);
             safeMove(move.x, move.y);
-            //placeNode();
-            manageNodes(start.x, start.y, move.x, move.y);
+            manageNodes(start,move);
         }
 
 
