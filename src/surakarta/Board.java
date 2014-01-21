@@ -261,7 +261,8 @@ public final class Board {
         int calculateY = Math.abs(firstY - y);
 
         if (calculateX <= 1 || calculateY <= 1) {
-            if (board[x][y] == null) {
+            Integer temp = checkValue(x, y);
+            if (temp == -1) {
                 setFinalX(x);
                 setFinalY(y);
                 return true;
@@ -277,13 +278,15 @@ public final class Board {
 
 //selecting hole
     public boolean selectNode(int x, int y) {
-        if (board[x][y] != null) {
-            setInitX(x);
-            setInitY(y);
-            return true;
+        Integer temp = checkValue(x, y);
+        if (temp != -1) {
+            String type = Nodes.get(temp).type;
+            setInitX(Nodes.get(temp).x);
+            setInitY(Nodes.get(temp).y);
         } else {
             return false;
         }
+        return false;
     }
 
     //Placing new position for new node
@@ -295,7 +298,6 @@ public final class Board {
             String temp = board[initX][initY];
             board[getInitX()][getInitY()] = board[getFinalX()][getFinalY()];
             board[getFinalX()][getFinalY()] = temp;
-            manageNodes(getInitX(), getInitY(), getFinalX(), getFinalY());
         } else {
             System.out.print("this has a value of " + board[getFinalX()][getFinalY()]);
             System.out.print(getFinalX() + " " + getFinalY());
@@ -628,23 +630,30 @@ public final class Board {
 
         int fitness = Astar.get(0).getFitness();
         int nextfitness = 0;
-        int highest_index=0;
+        int highest_index = 0;
         int highest = fitness;
         for (int i = 1; i < Astar.size(); i++) {
             nextfitness = Astar.get(i).getFitness();
             if (nextfitness > highest) {
                 highest = nextfitness;
-                highest_index=i;
+                highest_index = i;
             }
         }
-        
-        Node start = Astar.get(highest_index).getNodeStart();
-        Node move = Astar.get(highest_index).getNodeMove();
-        selectNode(start.x, start.y);
-        safeMove(move.x, move.y);
-        placeNode();
-        manageNodes(start.x, start.y,move.x, move.y);
-        
+        Node tempstart = Astar.get(highest_index).getNodeStart();
+        int tempX = tempstart.x;
+        int tempY = tempstart.y;
+        Integer index = checkValue(tempX, tempY);
+        if (index != -1) {
+            Node start = Nodes.get(index);
+            Node move = Astar.get(highest_index).getNodeMove();
+            selectNode(start.x, start.y);
+            safeMove(move.x, move.y);
+            //placeNode();
+            manageNodes(start.x, start.y, move.x, move.y);
+        }
+
+
+
     }
 
     public void checkPossibleMove(Node node) {
@@ -1673,6 +1682,6 @@ public final class Board {
 //            System.out.print(nodefitness.getFitness());
 //            System.out.println();
 //        }
-        
+
     }
 }

@@ -80,7 +80,7 @@ public class Surakarta {
                 Integer SecondHoleYCoor = Integer.parseInt(JOptionPane.showInputDialog("Input the second node y-coordinate"));
                 a.selectNode(FirstHoleXCoor, FirstHoleYCoor);
                 a.safeMove(SecondHoleXCoor, SecondHoleYCoor);
-                a.placeNode();
+               //a.placeNode();
                 a.manageNodes(FirstHoleXCoor, FirstHoleYCoor, SecondHoleXCoor, SecondHoleYCoor);
                 a.print();
                 System.out.println("enemy moving turn ------ ");
