@@ -1629,14 +1629,14 @@ public final class Board {
 //            System.out.print(node.type);
 //            System.out.println();
 //        }
-//        System.out.print(Astar.size());
-//        for (NodeFitness nodefitness : Astar) {
-//            System.out.print(nodefitness.getNodeStart().x + " " + nodefitness.getNodeStart().y);
-//            System.out.println();
-//            System.out.print(nodefitness.getNodeMove().x + " " + nodefitness.getNodeMove().y);
-//            System.out.print(nodefitness.getFitness());
-//            System.out.println();
-//        }
+        System.out.println("ASTAR SIZE " + Astar.size());
+        for (NodeFitness nodefitness : Astar) {
+            System.out.print(nodefitness.getNodeStart().x + " " + nodefitness.getNodeStart().y);
+            System.out.println();
+            System.out.print(nodefitness.getNodeMove().x + " " + nodefitness.getNodeMove().y);
+            System.out.print(nodefitness.getFitness());
+            System.out.println();
+        }
 
     }
 }

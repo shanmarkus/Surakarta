@@ -53,7 +53,7 @@ public class Surakarta {
             a.eat(HoleXCoor, HoleYCoor);
             Boolean success = a.getAiSuccess();
             if (success == true) {
-               // a.manageNodes(FirstHoleXCoor, FirstHoleYCoor, HoleXCoor, HoleYCoor);
+                // a.manageNodes(FirstHoleXCoor, FirstHoleYCoor, HoleXCoor, HoleYCoor);
                 a.print();
             } else {
                 System.out.println("invalid Move for eating");
@@ -80,13 +80,13 @@ public class Surakarta {
                 Integer SecondHoleYCoor = Integer.parseInt(JOptionPane.showInputDialog("Input the second node y-coordinate"));
                 a.selectNode(FirstHoleXCoor, FirstHoleYCoor);
                 a.safeMove(SecondHoleXCoor, SecondHoleYCoor);
-               //a.placeNode();
+                //a.placeNode();
                 int temp = a.checkValue(FirstHoleXCoor, FirstHoleYCoor);
                 Node move = new Node(SecondHoleXCoor, SecondHoleYCoor, null);
-                if(temp != -1){
-                    a.manageNodes(a.getNodes().get(temp),move);
+                if (temp != -1) {
+                    a.manageNodes(a.getNodes().get(temp), move);
                 }
-            
+
                 a.print();
                 System.out.println("enemy moving turn ------ ");
                 a.smartAI();
@@ -102,11 +102,19 @@ public class Surakarta {
                     a.eat(HoleXCoor, HoleYCoor);
                     Boolean success = a.getAiSuccess();
                     if (success == true) {
-                       // a.manageNodes(FirstHoleXCoor, FirstHoleYCoor, HoleYCoor, HoleYCoor);
-                        a.print();
+                        int firstNodePosition = a.checkValue(a.getInitX(), a.getInitY());
+                        Node new1 = new Node(a.getFinalX(), a.getFinalY(), a.getTurn());
+                        if (firstNodePosition != -1) {
+                            a.Nodes.remove(firstNodePosition);
+                            a.Nodes.add(new1);
+                            int secondNodePosition = a.checkValue(a.getFinalX(), a.getFinalY());
+                            if (secondNodePosition != -1) {
+                                a.Nodes.remove(secondNodePosition);
+                                a.print();
+                            }
+                        }
                         System.out.println("enemy moving turn ------ ");
                         a.smartAI();
-                        a.print();
                     } else {
                         System.out.println("invalid Move for eating");
                     }
