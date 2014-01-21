@@ -383,20 +383,24 @@ public final class Board {
         boolean success = getAiSuccess();
         if (success == true) {
             int firstNodePosition = checkValue(getInitX(), getInitY());
-            int secondNodePosition = checkValue(getFinalX(), getFinalY());
             Node new1 = new Node(getFinalX(), getFinalY(), turn);
-            if (firstNodePosition != -1 && secondNodePosition != -1) {
+            if (firstNodePosition != -1) {
                 Nodes.remove(firstNodePosition);
-                //Nodes.remove(secondNodePosition);
                 Nodes.add(new1);
-            }
-            for (int i = 0; i < Nodes.size(); i++) {
-                Node a = Nodes.get(i);
-                if (a.x == getFinalX() && a.y == getFinalY()) {
-                    Node b = new Node(getFinalX(), getFinalY(), "E");
-                    Nodes.remove(i);
+                int secondNodePosition = checkValue(getFinalX(), getFinalY());
+                if (secondNodePosition != -1) {
+                    Nodes.remove(secondNodePosition);
+                    System.out.println("asgasgasg");
+                    print();
                 }
             }
+//            for (int i = 0; i < Nodes.size(); i++) {
+//                Node a = Nodes.get(i);
+//                if (a.x == getFinalX() && a.y == getFinalY()) {
+//                    Node b = new Node(getFinalX(), getFinalY(), "E");
+//                    Nodes.remove(i);
+//                }
+//            }
         } else {
             System.out.println("AI MOVE");
             smartAIMove();
@@ -642,6 +646,8 @@ public final class Board {
                 }
             }
         }
+        aiMove();
+        print();
     }
 
     public void aiMove() {
@@ -669,9 +675,6 @@ public final class Board {
             safeMove(move.x, move.y);
             manageNodes(start, move);
         }
-
-
-
     }
 
     public void checkPossibleMove(Node node) {
@@ -1674,12 +1677,12 @@ public final class Board {
             System.out.println();
         }
         System.out.println();
-//        for (Node node : Nodes) {
-//            System.out.print(node.x);
-//            System.out.print(node.y);
-//            System.out.print(node.type);
-//            System.out.println();
-//        }
+        for (Node node : Nodes) {
+            System.out.print(node.x);
+            System.out.print(node.y);
+            System.out.print(node.type);
+            System.out.println();
+        }
 //        System.out.print(Astar.size());
 //        for (NodeFitness nodefitness : Astar) {
 //            System.out.print(nodefitness.getNodeStart().x + " " + nodefitness.getNodeStart().y);
