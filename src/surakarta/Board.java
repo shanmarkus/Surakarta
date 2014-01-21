@@ -353,20 +353,12 @@ public final class Board {
 
                 for (Hole holeOuter : outerHole) {
                     selectNode(node.x, node.y);//(4,0)
-                    //
-                    System.out.println(node.x + " " + node.y + " " + node.type);
-                    System.out.println("Hole Outer " + holeOuter.a + " " + holeOuter.b);
                     checkLoopRange(holeOuter.a, holeOuter.b); //CLR(2,0)
                     boolean loopRangeTemp = getRangeLoop();
                     if (loopRangeTemp == true) {
-                        //
-                        System.out.println("2");
                         safeLoop(holeOuter.a, holeOuter.b);
                         boolean safe = getValidLoop();
-                        System.out.println(safe);
                         if (safe == true) {
-                            //
-                            System.out.println("2.1");
                             eat(holeOuter.a, holeOuter.b);
                             boolean success = getAiSuccess();
                             if (success == true) {
@@ -390,17 +382,9 @@ public final class Board {
                 int secondNodePosition = checkValue(getFinalX(), getFinalY());
                 if (secondNodePosition != -1) {
                     Nodes.remove(secondNodePosition);
-                    System.out.println("asgasgasg");
                     print();
                 }
             }
-//            for (int i = 0; i < Nodes.size(); i++) {
-//                Node a = Nodes.get(i);
-//                if (a.x == getFinalX() && a.y == getFinalY()) {
-//                    Node b = new Node(getFinalX(), getFinalY(), "E");
-//                    Nodes.remove(i);
-//                }
-//            }
         } else {
             System.out.println("AI MOVE");
             smartAIMove();
@@ -737,7 +721,6 @@ public final class Board {
                 safe = safeMove(nextX + node.x, nextY + node.y);
                 if (safe == true) {
                     placeNode();
-                    System.out.println("1");
                 } else {
                     RandomMove();
                 }
@@ -747,7 +730,6 @@ public final class Board {
                 safe = safeMove(nextX + node.x, nextY + node.y);
                 if (safe == true) {
                     placeNode();
-                    System.out.println("2");
                 } else {
                     RandomMove();
                 }
@@ -757,7 +739,6 @@ public final class Board {
                 safe = safeMove(nextX + node.x, nextY + node.y);
                 if (safe == true) {
                     placeNode();
-                    System.out.println("3");
                 } else {
                     RandomMove();
                 }
@@ -767,7 +748,6 @@ public final class Board {
                 safe = safeMove(nextX + node.x, nextY + node.y);
                 if (safe == true) {
                     placeNode();
-                    System.out.println("4");
                 } else {
                     RandomMove();
                 }
@@ -776,7 +756,6 @@ public final class Board {
                 Integer nextY = rand.nextInt(2) - 1;
                 safe = safeMove(nextX + node.x, nextY + node.y);
                 if (safe == true) {
-                    System.out.println("5");
                     placeNode();
                 } else {
                     RandomMove();
@@ -787,7 +766,6 @@ public final class Board {
                 safe = safeMove(nextX + node.x, nextY + node.y);
                 if (safe == true) {
                     placeNode();
-                    System.out.println("6");
                 } else {
                     RandomMove();
                 }
@@ -797,7 +775,6 @@ public final class Board {
                 safe = safeMove(nextX + node.x, nextY + node.y);
                 if (safe == true) {
                     placeNode();
-                    System.out.println("7");
                 } else {
                     RandomMove();
                 }
@@ -1677,12 +1654,12 @@ public final class Board {
             System.out.println();
         }
         System.out.println();
-        for (Node node : Nodes) {
-            System.out.print(node.x);
-            System.out.print(node.y);
-            System.out.print(node.type);
-            System.out.println();
-        }
+//        for (Node node : Nodes) {
+//            System.out.print(node.x);
+//            System.out.print(node.y);
+//            System.out.print(node.type);
+//            System.out.println();
+//        }
 //        System.out.print(Astar.size());
 //        for (NodeFitness nodefitness : Astar) {
 //            System.out.print(nodefitness.getNodeStart().x + " " + nodefitness.getNodeStart().y);
