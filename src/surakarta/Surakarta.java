@@ -13,26 +13,16 @@ import javax.swing.JOptionPane;
  */
 public class Surakarta {
 
+    Board a = new Board(6);
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
 
-//        Board a = new Board(6);
-//        a.print();
-//        System.out.println();
-//        System.out.println(a.loopMove(0, 2));
-//        System.out.println(a.loopMove(5, 2));
-//        System.out.println(a.loopMove(0, 0));
-//        System.out.println(a.loopMove(5, 0));
-//        System.out.println(a.loopMove(0, 5));
-//        System.out.println(a.loopMove(5, 5));
-//        System.out.println(a.loopMove(0, 1));
-//        System.out.println(a.loopMove(1, 0));
 
         Board a = new Board(6);
         a.print();
-        String win = "B";
 
         Integer choices = Integer.parseInt(JOptionPane.showInputDialog("1. move node \n 2. eat node \n 3. play with bot \n 4. play with greedy ai \n 5.exit"));
         if (choices == 1) {
@@ -50,16 +40,27 @@ public class Surakarta {
             Integer HoleXCoor = Integer.parseInt(JOptionPane.showInputDialog("Input the Hole x-coordinate"));
             Integer HoleYCoor = Integer.parseInt(JOptionPane.showInputDialog("Input the Hole y-coordinate"));
             a.selectNode(FirstHoleXCoor, FirstHoleYCoor);
-            a.eat(HoleXCoor, HoleYCoor);
-            Boolean success = a.getAiSuccess();
-            if (success == true) {
-                // a.manageNodes(FirstHoleXCoor, FirstHoleYCoor, HoleXCoor, HoleYCoor);
-                a.print();
-            } else {
-                System.out.println("invalid Move for eating");
+            a.safeLoop(HoleXCoor, HoleYCoor);
+            boolean safeLoop = a.getValidLoop();
+            if (safeLoop == true) {
+                a.eat(HoleXCoor, HoleYCoor);
+                Boolean success = a.getAiSuccess();
+                if (success == true) {
+                    int firstNodePosition = a.checkValue(a.getInitX(), a.getInitY());
+                    Node new1 = new Node(a.getFinalX(), a.getFinalY(), a.getTurn());
+                    if (firstNodePosition != -1) {
+                        a.Nodes.remove(firstNodePosition);
+                        a.Nodes.add(new1);
+                        int secondNodePosition = a.checkValue(a.getFinalX(), a.getFinalY());
+                        if (secondNodePosition != -1) {
+                            a.Nodes.remove(secondNodePosition);
+                            a.print();
+                        }
+                    }
+                } else {
+                    System.out.println("invalid Move for eating");
+                }
             }
-
-
         } else if (choices == 3) {
             playWithDumbAI();
         } else if (choices == 4) {
@@ -70,8 +71,9 @@ public class Surakarta {
     public static void playWithGreedyAI() {
         Board a = new Board(6);
         String win = "B";
+        boolean result = a.WinCheck();
 
-        while (win.equals("B")) {
+        while (result == false) {
             Integer humanChoices = Integer.parseInt(JOptionPane.showInputDialog("1. Move your pawn \n 2. eat enemy"));
             if (humanChoices == 1) {
                 Integer FirstHoleXCoor = Integer.parseInt(JOptionPane.showInputDialog("Input the first node x-coordinate"));
@@ -90,6 +92,7 @@ public class Surakarta {
                 a.print();
                 System.out.println("enemy moving turn ------ ");
                 a.smartAI();
+                result = a.WinCheck();
             } else if (humanChoices == 2) {
                 Integer FirstHoleXCoor = Integer.parseInt(JOptionPane.showInputDialog("Input the node x-coordinate"));
                 Integer FirstHoleYCoor = Integer.parseInt(JOptionPane.showInputDialog("Input the node y-coordinate"));
@@ -115,6 +118,7 @@ public class Surakarta {
                         }
                         System.out.println("enemy moving turn ------ ");
                         a.smartAI();
+                        result = a.WinCheck();
                     } else {
                         System.out.println("invalid Move for eating");
                     }
@@ -122,8 +126,8 @@ public class Surakarta {
                     System.out.println("invalid Hole");
                 }
             }
-
         }
+        System.out.println("End Game");
     }
 
     public static void playWithDumbAI() {
