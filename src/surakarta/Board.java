@@ -372,10 +372,10 @@ public final class Board {
                 //check wether the node has possible move or not
                 if (!possibleNodeMove.isEmpty()) {
                     for (Node possibleNode : possibleNodeMove) {
-                        setFitness(0);
                         System.out.println("-PossibleNode");
                         //check if the human can eat this node or not 
                         for (Node humanNode : Nodes) {
+                            setFitness(0);
                             //check for human node
                             if (humanNode.type.equals("H")) {
                                 setInitX(humanNode.x);
@@ -402,6 +402,7 @@ public final class Board {
                                     }
                                 }
 
+                                //check size 
                                 int innerSize = possibleInnerHole.size();
                                 int outerSize = possibleOuterHole.size();
 
@@ -412,6 +413,8 @@ public final class Board {
                                         selectNode(humanNode.x, humanNode.y);
                                         safeLoop(hole.a, hole.b);
                                         boolean safeLoop = getValidLoop();
+
+                                        //if valide then try to eat
                                         if (safeLoop == true) {
                                             eat(hole.a, hole.b);
                                             Boolean success = getAiSuccess();
@@ -421,93 +424,19 @@ public final class Board {
                                                     Integer tempFitness = getFitness();
                                                     setFitness(tempFitness - 1);
                                                     System.out.println("-CounterAttackInner");
+                                                    break;
                                                     //then check if it can counter or not
                                                     //check for AI Node if it can counter attack or not 
-                                                    for (Node aiNode : Nodes) {
-                                                        if (aiNode.type.equals("E")) {
-                                                            setInitX(aiNode.x);
-                                                            setInitY(aiNode.y);
-                                                            //init array to hold possible hole
-                                                            ArrayList<Hole> counterInnerHole = new ArrayList<>();
-                                                            ArrayList<Hole> counterOuterHole = new ArrayList<>();
-
-                                                            //check possible hole in inner hole loop
-                                                            for (Hole inHole : innerHole) {
-                                                                checkLoopRange(inHole.a, inHole.b);
-                                                                boolean rangeInnerLoop = getRangeLoop();
-                                                                if (rangeInnerLoop == true) {
-                                                                    counterInnerHole.add(inHole);
-                                                                }
-                                                            }
-
-                                                            //check possible hole in outer hole loop
-                                                            for (Hole outHole : outerHole) {
-                                                                checkLoopRange(outHole.a, outHole.b);
-                                                                boolean rangeOuterLoop = getRangeLoop();
-                                                                if (rangeOuterLoop == true) {
-                                                                    counterOuterHole.add(outHole);
-                                                                }
-                                                            }
-
-                                                            //getting size of the size of the counter
-                                                            int counterInnerSize = counterInnerHole.size();
-                                                            int counterOuterSize = counterOuterHole.size();
-
-                                                            // the range is between the inner size loop
-                                                            if (counterInnerSize != 0 && counterOuterSize == 0) {
-                                                                for (Hole aihole : counterInnerHole) {
-                                                                    selectNode(aiNode.x, aiNode.y);
-                                                                    safeLoop(aihole.a, aihole.b);
-                                                                    boolean safeLoopAi = getValidLoop();
-                                                                    if (safeLoopAi == true) {
-                                                                        eat(aihole.a, aihole.b);
-                                                                        Boolean successAiInner = getAiSuccess();
-                                                                        if (successAiInner == true) {
-                                                                            if (possibleNode.x == getFinalX() && possibleNode.y == getFinalY()) {
-                                                                                //ntar di check lagi
-                                                                                tempFitness = getFitness();
-                                                                                setFitness(tempFitness + 1);
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                                //if it finished looping and find none way to eat then the fitness will + 1
-                                                                //then add to Astar arraylist
-                                                                tempFitness = getFitness();
-                                                                setFitness(tempFitness - 1);
-                                                            } else if (counterInnerSize == 0 && counterOuterSize != 0) {
-                                                                for (Hole aihole : counterOuterHole) {
-                                                                    selectNode(aiNode.x, aiNode.y);
-                                                                    safeLoop(aihole.a, aihole.b);
-                                                                    boolean safeLoopAi = getValidLoop();
-                                                                    if (safeLoopAi == true) {
-                                                                        eat(aihole.a, aihole.b);
-                                                                        Boolean successAiOuter = getAiSuccess();
-                                                                        if (successAiOuter == true) {
-                                                                            if (possibleNode.x == getFinalX() && possibleNode.y == getFinalY()) {
-                                                                                //ntar di check lagi
-                                                                                tempFitness = getFitness();
-                                                                                setFitness(tempFitness + 1);
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                    //if it finished looping and find none way to eat then the fitness will + 1
-                                                                    //then add to Astar arraylist
-                                                                    tempFitness = getFitness();
-                                                                    setFitness(tempFitness - 1);
-                                                                }
-                                                            } else {
-                                                                tempFitness = getFitness();
-                                                                setFitness(tempFitness - 1);
-                                                            }
-                                                        }
-                                                    }
                                                 }
+                                            } else {
+                                                //kalo dia ga success makan 
+                                                int tempFitness = getFitness();
+                                                setFitness(tempFitness + 1);
+                                                break;
                                             }
                                         }
                                     }
-                                } else if (outerSize != 0 && innerSize == 0) {
-                                    System.out.println("-OuterHole");
+                                } else if (innerSize == 0 && outerSize != 0) {
                                     for (Hole hole : possibleOuterHole) {
                                         selectNode(humanNode.x, humanNode.y);
                                         safeLoop(hole.a, hole.b);
@@ -521,101 +450,24 @@ public final class Board {
                                                     Integer tempFitness = getFitness();
                                                     setFitness(tempFitness - 1);
                                                     System.out.println("-CounterAttackOuter");
-                                                    //then check if it can counter or not
-                                                    //check for AI Node if it can counter attack or not 
-                                                    for (Node aiNode : Nodes) {
-                                                        if (aiNode.type.equals("E")) {
-                                                            setInitX(aiNode.x);
-                                                            setInitY(aiNode.y);
-                                                            //init array to hold possible hole
-                                                            ArrayList<Hole> counterInnerHole = new ArrayList<>();
-                                                            ArrayList<Hole> counterOuterHole = new ArrayList<>();
-
-                                                            //check possible hole in inner hole loop
-                                                            for (Hole inHole : innerHole) {
-                                                                checkLoopRange(inHole.a, inHole.b);
-                                                                boolean rangeInnerLoop = getRangeLoop();
-                                                                if (rangeInnerLoop == true) {
-                                                                    counterInnerHole.add(inHole);
-                                                                }
-                                                            }
-
-                                                            //check possible hole in outer hole loop
-                                                            for (Hole outHole : outerHole) {
-                                                                checkLoopRange(outHole.a, outHole.b);
-                                                                boolean rangeOuterLoop = getRangeLoop();
-                                                                if (rangeOuterLoop == true) {
-                                                                    counterOuterHole.add(outHole);
-                                                                }
-                                                            }
-
-                                                            //getting size of the size of the counter
-                                                            int counterInnerSize = counterInnerHole.size();
-                                                            int counterOuterSize = counterOuterHole.size();
-
-                                                            // the range is between the inner size loop
-                                                            if (counterInnerSize != 0 && counterOuterSize == 0) {
-                                                                for (Hole aihole : counterInnerHole) {
-                                                                    selectNode(aiNode.x, aiNode.y);
-                                                                    safeLoop(aihole.a, aihole.b);
-                                                                    boolean safeLoopAi = getValidLoop();
-                                                                    if (safeLoopAi == true) {
-                                                                        eat(aihole.a, aihole.b);
-                                                                        Boolean successAiInner = getAiSuccess();
-                                                                        if (successAiInner == true) {
-                                                                            if (possibleNode.x == getFinalX() && possibleNode.y == getFinalY()) {
-                                                                                //ntar di check lagi
-                                                                                tempFitness = getFitness();
-                                                                                setFitness(tempFitness + 1);
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                    //if it finished looping and find none way to eat then the fitness will + 1
-                                                                    //then add to Astar arraylist
-                                                                    tempFitness = getFitness();
-                                                                    setFitness(tempFitness - 1);
-                                                                }
-                                                            } else if (counterInnerSize == 0 && counterOuterSize != 0) {
-                                                                for (Hole aihole : counterOuterHole) {
-                                                                    selectNode(aiNode.x, aiNode.y);
-                                                                    safeLoop(aihole.a, aihole.b);
-                                                                    boolean safeLoopAi = getValidLoop();
-                                                                    if (safeLoopAi == true) {
-                                                                        eat(aihole.a, aihole.b);
-                                                                        Boolean successAiOuter = getAiSuccess();
-                                                                        if (successAiOuter == true) {
-                                                                            if (possibleNode.x == getFinalX() && possibleNode.y == getFinalY()) {
-                                                                                //ntar di check lagi
-                                                                                tempFitness = getFitness();
-                                                                                setFitness(tempFitness + 1);
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                    //if it finished looping and find none way to eat then the fitness will + 1
-                                                                    //then add to Astar arraylist
-                                                                    tempFitness = getFitness();
-                                                                    setFitness(tempFitness - 1);
-                                                                }
-                                                            } else {
-                                                                tempFitness = getFitness();
-                                                                setFitness(tempFitness - 1);
-                                                            }
-                                                        }
-                                                    }
+                                                    break;
                                                 }
+                                            } else {
+                                                //kalo dia ga success makan 
+                                                int tempFitness = getFitness();
+                                                setFitness(tempFitness + 1);
+                                                break;
                                             }
                                         }
                                     }
-                                } else {
-                                    System.out.println("-OutTheEdge");
-                                    int tempFitness = getFitness();
-                                    setFitness(tempFitness - 1);
                                 }
                             }
                         }
+                        //add possibleNode fitness to the Astar
                         NodeFitness temp = new NodeFitness(node, possibleNode, getFitness());
                         Astar.add(temp);
                     }
+
                 }
             }
         }
