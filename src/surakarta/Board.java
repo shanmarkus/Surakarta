@@ -372,7 +372,6 @@ public final class Board {
                 //check wether the node has possible move or not
                 if (!possibleNodeMove.isEmpty()) {
                     for (Node possibleNode : possibleNodeMove) {
-                        System.out.println("-PossibleNode");
                         //check if the human can eat this node or not 
                         for (Node humanNode : Nodes) {
                             setFitness(0);
@@ -408,12 +407,10 @@ public final class Board {
 
                                 // the range is between the inner size loop
                                 if (innerSize != 0 && outerSize == 0) {
-                                    System.out.println("-InnerHole");
                                     for (Hole hole : possibleInnerHole) {
                                         selectNode(humanNode.x, humanNode.y);
                                         safeLoop(hole.a, hole.b);
                                         boolean safeLoop = getValidLoop();
-
                                         //if valide then try to eat
                                         if (safeLoop == true) {
                                             eat(hole.a, hole.b);
@@ -424,7 +421,6 @@ public final class Board {
                                                     Integer tempFitness = getFitness();
                                                     setFitness(tempFitness - 1);
                                                     Node humanEater = Nodes.get(checkValue(getFinalX(), getFinalY()));
-                                                    System.out.println("-CounterAttackInner");
 
                                                     //then check if it can counter or not
                                                     //check for AI Node if it can counter attack or not 
@@ -537,7 +533,6 @@ public final class Board {
                                                     Integer tempFitness = getFitness();
                                                     setFitness(tempFitness - 1);
                                                     Node humanEater = Nodes.get(checkValue(getFinalX(), getFinalY()));
-                                                    System.out.println("-CounterAttackOuter");
                                                     //then check if it can counter or not
                                                     //check for AI Node if it can counter attack or not 
 
@@ -868,7 +863,17 @@ public final class Board {
                     if (status == false) {
                         dumbAI();
                     } else {
-                        // eat is success then its done 
+                        int firstNodePosition = checkValue(getInitX(), getInitY());
+                        Node new1 = new Node(getFinalX(), getFinalY(), turn);
+                        if (firstNodePosition != -1) {
+                            Nodes.remove(firstNodePosition);
+                            Nodes.add(new1);
+                            int secondNodePosition = checkValue(getFinalX(), getFinalY());
+                            if (secondNodePosition != -1) {
+                                Nodes.remove(secondNodePosition);
+                                print();
+                            }
+                        }
                     }
                 } else {
                     safeLoop(outer.a, outer.b);
@@ -879,7 +884,17 @@ public final class Board {
                         if (status == false) {
                             dumbAI();
                         } else {
-                            // eat is success then its done
+                            int firstNodePosition = checkValue(getInitX(), getInitY());
+                            Node new1 = new Node(getFinalX(), getFinalY(), turn);
+                            if (firstNodePosition != -1) {
+                                Nodes.remove(firstNodePosition);
+                                Nodes.add(new1);
+                                int secondNodePosition = checkValue(getFinalX(), getFinalY());
+                                if (secondNodePosition != -1) {
+                                    Nodes.remove(secondNodePosition);
+                                    print();
+                                }
+                            }
                         }
                     }
                 }
@@ -1713,14 +1728,14 @@ public final class Board {
 //            System.out.print(node.type);
 //            System.out.println();
 //        }
-        System.out.println("ASTAR SIZE " + Astar.size());
-        for (NodeFitness nodefitness : Astar) {
-            System.out.print(nodefitness.getNodeStart().x + " " + nodefitness.getNodeStart().y);
-            System.out.println();
-            System.out.print(nodefitness.getNodeMove().x + " " + nodefitness.getNodeMove().y);
-            System.out.print(nodefitness.getFitness());
-            System.out.println();
-        }
+//        System.out.println("ASTAR SIZE " + Astar.size());
+//        for (NodeFitness nodefitness : Astar) {
+//            System.out.print(nodefitness.getNodeStart().x + " " + nodefitness.getNodeStart().y);
+//            System.out.println();
+//            System.out.print(nodefitness.getNodeMove().x + " " + nodefitness.getNodeMove().y);
+//            System.out.print(nodefitness.getFitness());
+//            System.out.println();
+//        }
 
     }
 }

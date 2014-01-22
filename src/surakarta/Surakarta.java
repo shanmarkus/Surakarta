@@ -175,53 +175,5 @@ public class Surakarta {
         }
     }
 }
-//        //TESTING DEVELOPMENT
-//        Board a = new Board(6);
-//        a.print();
-//        System.out.println();
-//        a.selectNode(1, 0);
-//        a.safeMove(2, 0);
-//        a.placeNode();
-//        a.print();
-//        System.out.println();
-//        a.selectNode(4, 0);
-//        a.safeMove(3, 0);
-//        a.placeNode();
-//        a.print();
-//        System.out.println();
-//        a.selectNode(3, 0);
-//        a.safeMove(1, 0);
-//        a.placeNode();
-//        a.print();
-//        System.out.println();
-//        a.selectNode(0, 1);
-//        a.eat(0, 1);
-//        a.print();
-//        System.out.println();
-//        a.dumbAI();
-//        a.print();
-//        System.out.println("00");
-//        a.selectNode(2, 0);
-//        a.safeMove(3, 0);
-//        a.placeNode();
-//        a.print();
-//        System.out.println();
-//        a.selectNode(5, 0);
-//        a.safeMove(4, 0);
-//        a.placeNode();
-//        a.print();
-//        System.out.println();
-//        a.selectNode(5, 2);
-//        a.eat(5, 2);
-//        a.print();
-//        System.out.println();
-//        a.selectNode(3, 0);
-//        a.safeMove(2, 0);
-//        a.placeNode();
-//        a.print();
-//        System.out.println();
-//        a.selectNode(0, 2);
-//        a.eat(0, 2);
-//        a.print();
-//        a.dumbAI();
+
 
